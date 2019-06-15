@@ -74,7 +74,7 @@ const setup = (cb) => {
     }
 
     if(data.type === "rejection") {
-      console.error("cannot do that at this time");
+      console.error(`cannot do '${data.event}' at this time`);
     }
   };
 
@@ -112,6 +112,11 @@ const actions = setup((data) => {
       console.log('setting video');
       const video_id = data.params.url.match(/https\:\/\/www.youtube.com\/watch\?v=(.*)/)[1];
       player.loadVideoByUrl({mediaContentUrl: `http://www.youtube.com/v/${video_id}?version=3`});
+      document.getElementById("videoLoader_input").value = data.params.url;
+
+      const videoTitle = fetch(`https://www.googleapis.com/youtube/v3/videos?part=snippet&id=${video_id}&key=AIzaSyDC5sa5suWHrefNDXtAuZswRgzcSnnnsIA`).then(data => data.json()).then(json => {
+        document.getElementById('videoTitle').innerHTML = json.items[0].snippet.title;
+      })
     }
   };
 
@@ -119,9 +124,16 @@ const actions = setup((data) => {
 });
 
 const onPlayerStateChange = () => {
-  console.log('state change', player.getPlayerState());
-  if(player.getPlayerState() === YT.PlayerState.BUFFERING) {
-    console.log("video has started buffering, pause everyone else");
-    actions.proposeEvent("pause");
-  }
+  const state = player.getPlayerState();
+
+  console.log('state change', state);
 }
+
+
+document.getElementById("videoLoader_input").addEventListener("keyup", e => {
+    if(e.keyCode === 13) {
+      actions.proposeEvent('load', {
+        url: e.target.value
+      })
+    }
+});

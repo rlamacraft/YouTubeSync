@@ -41,11 +41,6 @@ header {
 
 header h2 {
   font-weight: 300;
-
-  /*
-    This is so that there's a bigger gap between my name and my job description
-    when my name wraps onto two lines.
-  */
   margin-top: 0.3em;
 }
 
@@ -53,4 +48,33 @@ main {
   display: flex;
   flex-direction: row;
   justify-content: space-around;
+}
+
+.box h2 {
+  color: var(--GREEN);
+  margin-bottom: 10px;
+}
+
+label#videoLoader {
+  width: 100%;
+  display: flex;
+  border: 3px solid var(--GREEN);
+  border-radius: 5px;
+}
+
+label#videoLoader span {
+  white-space: nowrap;
+  margin: 8px;
+  color: var(--GREEN);
+  font-weight: 500;
+}
+
+input#videoLoader_input {
+  font-size: 1em;
+  line-height: 1.2;
+  padding: 3px;
+  width: 100%;
+  margin: 0;
+  border: 0;
+  border-left: 3px solid var(--GREEN);
 }

@@ -14,13 +14,17 @@
     </header>
     <main>
       <div class="box">
-        <h2>Now Playing: Nothing.</h2>
+        <h2>Now Playing: <span id="videoTitle">Nothing</span>.</h2>
         <div id="playerContainer"></div>
         <div id="messageLog">
           <ul>
 
           </ul>
         </div>
+        <label id="videoLoader">
+          <span>Video URL</span>
+          <input id="videoLoader_input" type="text">
+        </label>
       </div>
     </main>
     <script src="main.js"></script>
@@ -32,7 +36,6 @@
       player = new YT.Player('playerContainer', {
         height: '390',
         width: '640',
-        videoId: 'M7lc1UVf-VE',
         events: {
           'onStateChange': onPlayerStateChange
         }

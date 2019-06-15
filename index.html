@@ -1,1 +1,43 @@
-<h1>Hello, World!</h1>
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no, width=device-width">
+    <title>YouTube Sync</title>
+    <link href="styles.css" rel="stylesheet">
+  </head>
+  <body>
+    <header>
+      <hgroup>
+        <h1>YouTube Sync</h1>
+      </hgroup>
+    </header>
+    <main>
+      <div class="box">
+        <h2>Now Playing: Nothing.</h2>
+        <div id="playerContainer"></div>
+        <div id="messageLog">
+          <ul>
+
+          </ul>
+        </div>
+      </div>
+    </main>
+    <script src="main.js"></script>
+    <script id=playerCode></script>
+    <script>
+    var playerCode = document.getElementById("playerCode");
+    playerCode.src = "https://www.youtube.com/iframe_api";
+    function onYouTubeIframeAPIReady() {
+      player = new YT.Player('playerContainer', {
+        height: '390',
+        width: '640',
+        videoId: 'M7lc1UVf-VE',
+        events: {
+          'onStateChange': onPlayerStateChange
+        }
+      });
+    }
+    </script>
+  </body>
+</html>

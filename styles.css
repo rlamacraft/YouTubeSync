@@ -1,0 +1,56 @@
+html {
+  --WHITE: #fafafa;
+  --LIGHT-GREY: #f2f2f2;
+  --DARK-GREY: #3b525d;
+  --GREEN: #6DA5A5;
+}
+
+body {
+  background: var(--LIGHT-GREY);
+  color: var(--DARK-GREY);
+  font-family: Helvetica, Arial, sans-serif;
+  margin: 0;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  margin: 0;
+}
+
+a {
+  color: var(--GREEN);
+  font-weight: 500;
+}
+
+p {
+  line-height: 1.5;
+}
+
+.box {
+  background: var(--WHITE);
+  border-radius: 5px;
+  margin: 5vh 0;
+  max-width: 75%;
+  padding: 3vh 3vw;
+}
+
+header {
+  background-color: var(--DARK-GREY);
+  color: var(--WHITE);
+  padding: 5vw 5vh;
+}
+
+header h2 {
+  font-weight: 300;
+
+  /*
+    This is so that there's a bigger gap between my name and my job description
+    when my name wraps onto two lines.
+  */
+  margin-top: 0.3em;
+}
+
+main {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+}

@@ -94,8 +94,13 @@ const setup = (cb) => {
     // console.log(`Requested #1`);
   }
 
+  ws.onclose = (evt) => {
+    alert("connection issue, please refresh");
+  };
+
   return {
-    "proposeEvent": proposeEvent
+    "proposeEvent": proposeEvent,
+    "closeEvent": close
   }
 }
 

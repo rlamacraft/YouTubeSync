@@ -53,7 +53,8 @@ const setup = (cb) => {
             reject(data);
           }
         } else if(data.event === "pause") {
-          if(player.getPlayerState() === YT.PlayerState.PLAYING || player.getPlayerState() === YT.PlayerState.BUFFERING) {
+          if(player.getPlayerState() === YT.PlayerState.PLAYING
+          || player.getPlayerState() === YT.PlayerState.BUFFERING) {
             accept(data);
           } else {
             reject(data);
@@ -110,7 +111,7 @@ const actions = setup((data) => {
     },
     "load": () => {
       console.log('setting video');
-      const video_id = data.params.url.match(/https\:\/\/www.youtube.com\/watch\?v=(.*)/)[1];
+	const video_id = getVideoId(data.params.url); //data.params.url.match(/https\:\/\/www.youtube.com\/watch\?v=(.*)/)[1];
       player.loadVideoByUrl({mediaContentUrl: `http://www.youtube.com/v/${video_id}?version=3`});
       document.getElementById("videoLoader_input").value = data.params.url;
 
@@ -127,6 +128,17 @@ const onPlayerStateChange = () => {
   const state = player.getPlayerState();
 
   console.log('state change', state);
+}
+
+function getVideoId(url) {
+    if(/https\:\/\/youtu\.be\/(.*)/.test(url)) {
+	return url.match(/https\:\/\/youtu\.be\/(.*)/)[1];
+    } else if(/v=(.*)/.test(url)) {
+	return url.match(/v=(.*)/)[1];
+    } else {
+	alert("Invalid URL");
+	throw new Error("Invalid URL");
+    }
 }
 
 

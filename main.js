@@ -107,8 +107,12 @@ const setup = (cb) => {
 const actions = setup((data) => {
   const eventMap = {
     "play": () => {
-      console.log('proposing playing');
-      player.playVideo();
+	console.log('proposing playing');
+	const time = data.params.time;
+	player.seekTo(time, true);
+	setTimeout(() => {
+	    player.playVideo();
+	}, 100);
     },
     "pause": () => {
       console.log('proposing pausing');
@@ -156,9 +160,13 @@ document.getElementById("videoLoader_input").addEventListener("keyup", e => {
 });
 
 document.getElementById("play").addEventListener("click", e => {
-    actions.proposeEvent("play");
+    actions.proposeEvent("play", {
+	time: player.getCurrentTime() // TODO: get current time of player
+    });
 });
 
 document.getElementById("pause").addEventListener("click", e => {
     actions.proposeEvent("pause");
 });
+
+

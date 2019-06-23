@@ -154,3 +154,11 @@ document.getElementById("videoLoader_input").addEventListener("keyup", e => {
       })
     }
 });
+
+document.getElementById("play").addEventListener("click", e => {
+    actions.proposeEvent("play");
+});
+
+document.getElementById("pause").addEventListener("click", e => {
+    actions.proposeEvent("pause");
+});

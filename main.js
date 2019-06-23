@@ -95,7 +95,7 @@ const setup = (cb) => {
   }
 
   ws.onclose = (evt) => {
-    alert("connection issue, please refresh");
+      actions = setupWithCallback();
   };
 
   return {
@@ -104,34 +104,38 @@ const setup = (cb) => {
   }
 }
 
-const actions = setup((data) => {
-  const eventMap = {
-    "play": () => {
-	console.log('proposing playing');
-	const time = data.params.time;
-	player.seekTo(time, true);
-	setTimeout(() => {
-	    player.playVideo();
-	}, 100);
-    },
-    "pause": () => {
-      console.log('proposing pausing');
-      player.pauseVideo();
-    },
-    "load": () => {
-      console.log('setting video');
-	const video_id = getVideoId(data.params.url); //data.params.url.match(/https\:\/\/www.youtube.com\/watch\?v=(.*)/)[1];
-      player.loadVideoByUrl({mediaContentUrl: `http://www.youtube.com/v/${video_id}?version=3`});
-      document.getElementById("videoLoader_input").value = data.params.url;
+function setupWithCallback() {
+    return setup((data) => {
+	const eventMap = {
+	    "play": () => {
+		console.log('proposing playing');
+		const time = data.params.time;
+		player.seekTo(time, true);
+		setTimeout(() => {
+		    player.playVideo();
+		}, 100);
+	    },
+	    "pause": () => {
+		console.log('proposing pausing');
+		player.pauseVideo();
+	    },
+	    "load": () => {
+		console.log('setting video');
+		const video_id = getVideoId(data.params.url); //data.params.url.match(/https\:\/\/www.youtube.com\/watch\?v=(.*)/)[1];
+		player.loadVideoByUrl({mediaContentUrl: `http://www.youtube.com/v/${video_id}?version=3`});
+		document.getElementById("videoLoader_input").value = data.params.url;
 
-      const videoTitle = fetch(`https://www.googleapis.com/youtube/v3/videos?part=snippet&id=${video_id}&key=AIzaSyDC5sa5suWHrefNDXtAuZswRgzcSnnnsIA`).then(data => data.json()).then(json => {
-        document.getElementById('videoTitle').innerHTML = json.items[0].snippet.title;
-      })
-    }
-  };
+		const videoTitle = fetch(`https://www.googleapis.com/youtube/v3/videos?part=snippet&id=${video_id}&key=AIzaSyDC5sa5suWHrefNDXtAuZswRgzcSnnnsIA`).then(data => data.json()).then(json => {
+		    document.getElementById('videoTitle').innerHTML = json.items[0].snippet.title;
+		})
+	    }
+	};
 
-  eventMap[data.event]();
-});
+	eventMap[data.event]();
+    });
+}
+
+var actions = setupWithCallback();
 
 const onPlayerStateChange = () => {
   const state = player.getPlayerState();

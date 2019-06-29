@@ -40,6 +40,11 @@
       player = new YT.Player('playerContainer', {
         height: '390',
         width: '640',
+        playerVars: {
+          controls: 0,
+          disablekb: 1,
+          modestbranding: 1
+        },
         events: {
           'onStateChange': onPlayerStateChange
         }

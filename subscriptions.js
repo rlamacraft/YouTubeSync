@@ -46,10 +46,14 @@ const fetchVideosMetadata = async (id) => {
 		id: v.id,
 		title: v.snippet.title,
 		channel: v.snippet.channelTitle,
-		duration: convertISO8601ToMinutes(v.contentDetails.duration)
+        duration: convertISO8601ToMinutes(v.contentDetails.duration),
+        publishedAt: v.snippet.publishedAt
 	}));
 };
 
+/**
+ * Used for populating array below
+ */
 const getChannelId = async (channels) => {
 	return (await youtubeFetch("channels", {
 		part: "id",
@@ -73,7 +77,15 @@ const recentUploads = async () => {
 };
 
 const renderNewVideos = (videoData) => {
-    videoData.map(video => {
+    videoData.sort((a,b) => {
+        if (a.publishedAt < b.publishedAt) {
+            return 1;
+        } else if(a.publishedAt > b.publishedAt) {
+            return -1;
+        } else {
+            return 0;
+        }
+    }).map(video => {
         const box = document.createElement('div');
         box.classList = "sub-box";
         const heading = document.createElement('h3');
@@ -110,5 +122,3 @@ const main = async () => {
 };
 
 main();
-
-// log(await getChannelId(		"sortedfood"));

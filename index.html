@@ -13,7 +13,7 @@
       </hgroup>
     </header>
     <main>
-      <div class="box">
+      <div class="box" id="box_player">
         <h2>Now Playing: <span id="videoTitle">Nothing</span>.</h2>
         <div id="playerContainer"></div>
         <div id="messageLog">
@@ -25,13 +25,16 @@
           <span>Video URL</span>
           <input id="videoLoader_input" type="text">
         </label>
-	<div class="buttonContainer">
-	  <button id="pause">Pause</button>
-  	  <button id="play">Play</button>
-	</div>
+	      <div class="buttonContainer">
+	        <button id="pause">Pause</button>
+  	      <button id="play">Play</button>
+	      </div>
+      </div>
+      <div class="box" id="box_subscriptions">
+        <h2>NEW</h2>
       </div>
     </main>
-    <script src="main.js"></script>
+    <script src="syncing.js"></script>
     <script id=playerCode></script>
     <script>
     var playerCode = document.getElementById("playerCode");
@@ -51,5 +54,6 @@
       });
     }
     </script>
+    <script src="subscriptions.js"></script>
   </body>
 </html>

@@ -16,6 +16,10 @@ h1, h2, h3, h4, h5, h6 {
   margin: 0;
 }
 
+h1 {
+  font-size: 4vh;
+}
+
 a {
   color: var(--GREEN);
   font-weight: 500;
@@ -28,15 +32,53 @@ p {
 .box {
   background: var(--WHITE);
   border-radius: 5px;
-  margin: 5vh 0;
+  margin: 3vh 3vw;
   max-width: 75%;
-  padding: 3vh 3vw;
+  padding: 2vh 2vw;
+}
+
+.box + .box {
+  margin-left: 0; /* manual margin collapsing */
+}
+
+#box_player {
+  flex-grow: 1;
+}
+
+#box_subscriptions {
+  max-width: 25vw;
+  overflow-y: auto;
+}
+
+.sub-box {
+  padding: 10px 15px;
+  border-radius: 5px;
+  background: var(--LIGHT-GREY);
+  margin-bottom: 2vh;
+  cursor: pointer;
+}
+
+.sub-box h3 {
+  font-size: 1.1em;
+  margin-bottom: 5px;
+  text-transform: capitalize;
+  color: var(--GREEN);
+}
+
+.sub-box h4 {
+  text-transform: uppercase;
+  font-size: 0.9em;
+}
+
+.sub-box .sub-box_subheading {
+  display: flex;
+  justify-content: space-between;
 }
 
 header {
   background-color: var(--DARK-GREY);
   color: var(--WHITE);
-  padding: 5vw 5vh;
+  padding: 3vw 3vh;
 }
 
 header h2 {
@@ -48,10 +90,11 @@ main {
   display: flex;
   flex-direction: row;
   justify-content: space-around;
+  height: 87vh;
 }
 
 .box h2 {
-  color: var(--GREEN);
+  color: var(--DARK-GREY);
   margin-bottom: 10px;
 }
 

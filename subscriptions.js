@@ -62,14 +62,15 @@ const getChannelId = async (channels) => {
 };
 
 const channelIds = [
-	"UC54SLBnD5k5U3Q6N__UjbAw", // Chinese Cooking Demystified
-	"UCPzFLpOblZEaIx2lpym1l1A", // French Guy Cooking
-	"UCfyehHM_eo4g5JUyWmms2LA", // SORTED
+    "UC54SLBnD5k5U3Q6N__UjbAw", // Chinese Cooking Demystified
+    "UCPzFLpOblZEaIx2lpym1l1A", // French Guy Cooking
+    "UCfyehHM_eo4g5JUyWmms2LA", // SORTED
     "UCekQr9znsk2vWxBo3YiLq2w", // You Suck At Cooking
     "UC9TM3Lrth8MQjHrttZJZiEw", // Adam Liaw
     "UCcjhYlL1WRBjKaJsMH_h7Lg", // Epicurious
     "UCQBG3PzyQKY8ieMG2gDAyOQ", // Peaceful Cuisine
     "UCF_fEX51a8LTXmMeJbPAPjw"  // Food Busker
+    "UC3XTzVzaHQEd30rQbuvCtTQ"  // Last Week Tonight
 ];
 
 const recentUploads = async () => {

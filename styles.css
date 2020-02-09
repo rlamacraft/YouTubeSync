@@ -33,7 +33,6 @@ p {
   background: var(--WHITE);
   border-radius: 5px;
   margin: 3vh 3vw;
-  max-width: 75%;
   padding: 2vh 2vw;
 }
 
@@ -120,4 +119,22 @@ input#videoLoader_input {
   margin: 0;
   border: 0;
   border-left: 3px solid var(--GREEN);
+}
+
+.video {
+  padding: 1em;
+  border-radius: 4px;
+  background: var(--GREEN);
+  color: white;
+  border: none;
+  margin: 0;
+  margin-bottom: 10px;
+  cursor: pointer;
+  font-size: 1em;
+  font-weight: 500;
+  font-family: sans-serif;
+}
+
+.video:active {
+  filter: brightness(80%);
 }

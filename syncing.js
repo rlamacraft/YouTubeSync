@@ -123,11 +123,11 @@ function setupWithCallback() {
 		console.log('setting video');
 		const video_id = getVideoId(data.params.url); //data.params.url.match(/https\:\/\/www.youtube.com\/watch\?v=(.*)/)[1];
 		player.loadVideoByUrl({mediaContentUrl: `http://www.youtube.com/v/${video_id}?version=3`});
-		document.getElementById("videoLoader_input").value = data.params.url;
+		document.getElementById("url-loader").value = data.params.url;
 
-		const videoTitle = fetch(`https://www.googleapis.com/youtube/v3/videos?part=snippet&id=${video_id}&key=AIzaSyDC5sa5suWHrefNDXtAuZswRgzcSnnnsIA`).then(data => data.json()).then(json => {
+/*		const videoTitle = fetch(`https://www.googleapis.com/youtube/v3/videos?part=snippet&id=${video_id}&key=AIzaSyDC5sa5suWHrefNDXtAuZswRgzcSnnnsIA`).then(data => data.json()).then(json => {
 		    document.getElementById('videoTitle').innerHTML = json.items[0].snippet.title;
-		})
+		})*/
 	    }
 	};
 
@@ -155,7 +155,7 @@ function getVideoId(url) {
 }
 
 
-document.getElementById("videoLoader_input").addEventListener("keyup", e => {
+document.getElementById("url-loader").addEventListener("keyup", e => {
     if(e.keyCode === 13) {
       actions.proposeEvent('load', {
         url: e.target.value

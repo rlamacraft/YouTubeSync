@@ -6,16 +6,19 @@ const main = async () => {
 	const title = item.getElementsByTagName('title')[0].innerHTML;
 	const link = item.getElementsByTagName('link')[0].innerHTML;
 	const id = /.*watch\?v=(.*)/.exec(link)[1];
-	return `<button class="video" data-id="${id}">${title}</button>`;
+	return `<option value="${id}">${title}</option>`;
     });
-    document.getElementById('box_subscriptions').innerHTML += rows.join('\n');
-    [...document.getElementsByClassName('video')].map(btn => {
-	btn.addEventListener('click', evt => {
-	    actions.proposeEvent('load', {
-                url: `https://www.youtube.com/watch?v=${evt.target.getAttribute('data-id')}`
-            })
-	})			    
-    });
+    const select = document.getElementById('video-selector');
+    select.innerHTML += rows.join('\n');
+}
+
+const onSelect = evt => {
+    const id = evt.options[evt.selectedIndex].value;
+    if(id !== "Choose") {
+	actions.proposeEvent('load', {
+            url: `https://www.youtube.com/watch?v=${id}`
+	});
+    }
 }
 
 main();

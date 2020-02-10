@@ -7,32 +7,37 @@
     <link href="styles.css" rel="stylesheet">
   </head>
   <body>
-    <header>
-      <hgroup>
-        <h1>YouTube Sync</h1>
-      </hgroup>
-    </header>
     <main>
       <div class="box" id="box_player">
-        <h2>Now Playing: <span id="videoTitle">Nothing</span>.</h2>
         <div id="playerContainer"></div>
         <div id="messageLog">
           <ul>
 
           </ul>
         </div>
-        <label id="videoLoader">
-          <span>Video URL</span>
-          <input id="videoLoader_input" type="text">
-        </label>
-	      <div class="buttonContainer">
-	        <button id="pause">Pause</button>
-  	      <button id="play">Play</button>
+	<form onsubmit="return false;">
+	  <fieldset id="controls">
+	    <legend>Synced Controls</legend>
+	    <button id="play">Play</button>
+	    <button id="pause">Pause</button>
+	  </fieldset>
+	  <fieldset id="select">
+	    <legend>Video Selection</legend>
+	    <div class="form-group">
+	      <div class="form-component">
+		<label for="url-loader">URL</label>
+		<input name="url-loader" id="url-loader" type="text">
 	      </div>
-      </div>
-      <div class="box" id="box_subscriptions">
-        <h2>NEW</h2>
-      </div>
+	      <div class="form-component">
+		<label for="video-selector">Recent Uploads</label>
+		<select id="video-selector" onchange="onSelect(this)">
+		  <option>Choose</option>
+		</select>
+	      </div>
+	    </div>
+	  </fieldset>
+	</form>
+      </div
     </main>
     <script src="syncing.js"></script>
     <script id=playerCode></script>

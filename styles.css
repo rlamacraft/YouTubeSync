@@ -103,6 +103,7 @@ form button {
 
 form {
     display: flex;
+    margin-top: 20px;
 }
 
 fieldset {
@@ -125,4 +126,22 @@ legend {
     font-family: 'futura', sans-serif;
     letter-spacing: 0.03em;
     padding: 0px 8px 4px 8px;
+}
+
+#messageLog {
+    margin: 30px 0px 10px 0px;
+    border: 2px solid var(--DARK-GREY);
+    border-radius: 3px;
+    padding: 13px;
+}
+
+#messageLogHeader {
+    display: inline;
+    font-size: 1.5em;
+}
+
+#messageLogBody {
+    display: inline-block;
+    vertical-align: bottom;
+    padding: 0.25em;
 }

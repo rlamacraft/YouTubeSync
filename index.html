@@ -10,10 +10,9 @@
     <main>
       <div class="box" id="box_player">
         <div id="playerContainer"></div>
-        <div id="messageLog">
-          <ul>
-
-          </ul>
+        <div id="messageLog" hidden>
+          <h4 id="messageLogHeader">!</h4>
+	  <div id="messageLogBody"></div>
         </div>
 	<form onsubmit="return false;">
 	  <fieldset id="controls">
@@ -54,7 +53,8 @@
           modestbranding: 1
         },
         events: {
-          'onStateChange': onPlayerStateChange
+            'onStateChange': onPlayerStateChange,
+	    'onError': onError,
         }
       });
     }

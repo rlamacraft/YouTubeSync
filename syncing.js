@@ -105,6 +105,11 @@ const setup = (cb) => {
 }
 
 function setupWithCallback() {
+    const prepareErrorMessageInCaseVideoFailsToPlay = (video_id) => {
+	document.getElementById('messageLogBody').innerText = `Error loading video. Check correct URL, videoId is '${video_id}'`;
+	document.getElementById('messageLog').hidden = true;
+    }
+    
     return setup((data) => {
 	const eventMap = {
 	    "play": () => {
@@ -120,14 +125,11 @@ function setupWithCallback() {
 		player.pauseVideo();
 	    },
 	    "load": () => {
-		console.log('setting video');
-		const video_id = getVideoId(data.params.url); //data.params.url.match(/https\:\/\/www.youtube.com\/watch\?v=(.*)/)[1];
+		const video_id = getVideoId(data.params.url);
+		prepareErrorMessageInCaseVideoFailsToPlay(video_id);
+		console.log(`setting video: id='${video_id}'`);
 		player.loadVideoByUrl({mediaContentUrl: `http://www.youtube.com/v/${video_id}?version=3`});
 		document.getElementById("url-loader").value = data.params.url;
-
-/*		const videoTitle = fetch(`https://www.googleapis.com/youtube/v3/videos?part=snippet&id=${video_id}&key=AIzaSyDC5sa5suWHrefNDXtAuZswRgzcSnnnsIA`).then(data => data.json()).then(json => {
-		    document.getElementById('videoTitle').innerHTML = json.items[0].snippet.title;
-		})*/
 	    }
 	};
 
@@ -143,6 +145,11 @@ const onPlayerStateChange = () => {
   console.log('state change', state);
 }
 
+const onError = (event) => {   
+    console.error("Failed to load player", event);
+    document.getElementById('messageLog').hidden = false;
+}
+
 function getVideoId(url) {
     if(/https\:\/\/youtu\.be\/(.*)/.test(url)) {
 	return url.match(/https\:\/\/youtu\.be\/(.*)/)[1];
@@ -153,7 +160,6 @@ function getVideoId(url) {
 	throw new Error("Invalid URL");
     }
 }
-
 
 document.getElementById("url-loader").addEventListener("keyup", e => {
     if(e.keyCode === 13) {

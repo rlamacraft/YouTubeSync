@@ -1,64 +1,81 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no, width=device-width">
-    <title>YouTube Sync</title>
-    <link href="styles.css" rel="stylesheet">
-  </head>
-  <body>
-    <main>
-      <div class="box" id="box_player">
-        <div id="playerContainer"></div>
-        <div id="messageLog" hidden>
-          <h4 id="messageLogHeader">!</h4>
-	  <div id="messageLogBody"></div>
-        </div>
-	<form onsubmit="return false;">
-	  <fieldset id="controls">
-	    <legend>Synced Controls</legend>
-	    <button id="play">Play</button>
-	    <button id="pause">Pause</button>
-	  </fieldset>
-	  <fieldset id="select">
-	    <legend>Video Selection</legend>
-	    <div class="form-group">
-	      <div class="form-component">
-		<label for="url-loader">URL</label>
-		<input name="url-loader" id="url-loader" type="text">
-	      </div>
-	      <div class="form-component">
-		<label for="video-selector">Recent Uploads</label>
-		<select id="video-selector" onchange="onSelect(this)">
-		  <option>Choose</option>
-		</select>
-	      </div>
-	    </div>
-	  </fieldset>
-	</form>
-      </div
-    </main>
-    <script src="syncing.js"></script>
-    <script id=playerCode></script>
-    <script>
-    var playerCode = document.getElementById("playerCode");
-    playerCode.src = "https://www.youtube.com/iframe_api";
-    function onYouTubeIframeAPIReady() {
-      player = new YT.Player('playerContainer', {
-        height: '390',
-        width: '640',
-        playerVars: {
-          controls: 1,
-          disablekb: 1,
-          modestbranding: 1
-        },
-        events: {
-            'onStateChange': onPlayerStateChange,
-	    'onError': onError,
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no, width=device-width">
+        <link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%2016%2016'%3E%3Ctext%20x='0'%20y='14'%3E🦄%3C/text%3E%3C/svg%3E" type="image/svg+xml" />
+        <title>YouTube Sync Testing</title>
+        <link href="styles.css" rel="stylesheet">
+    </head>
+    <body>
+        <main>
+            <div class="box" id="box_player">
+                <div id="playerContainer"></div>
+                <form onsubmit="return false;">
+            <fieldset id="select">
+	              <legend>Video Selection</legend>
+	              <div class="form-group">
+	                  <div class="form-component">
+		                    <label for="url-loader">URL</label>
+		                    <input name="url-loader" id="url-loader" type="text">
+	                  </div>
+	                  <div class="form-component">
+		                    <label for="video-selector">Recent Uploads</label>
+		                    <select id="video-selector" onchange="onSelect(this)">
+		                        <option>Choose</option>
+		                    </select>
+	                  </div>
+	              </div>
+	          </fieldset>
+	              </form>
+            </div>
+        </main>
+        <script id=playerCode></script>
+        <script>
+         var playerCode = document.getElementById("playerCode");
+         playerCode.src = "https://www.youtube.com/iframe_api";
+         function onYouTubeIframeAPIReady() {
+             player = new YT.Player('playerContainer', {
+                 height: '390',
+                 width: '640',
+                 playerVars: {
+                     controls: 1,
+                     disablekb: 1,
+                     modestbranding: 1
+                 },
+             });
+         }
+         const ws = new WebSocket('ws://youtubesync.rlamacraft.uk:65534/');
+         ws.onopen = () => {
+             console.log("connection established");
+         };
+         const sendMessage = (msg) => {
+             ws.send(msg);
+         };
+         ws.onmessage = (msg) => {
+             console.log("Playing ", msg.data);
+             player.loadVideoByUrl({
+                 mediaContentUrl: `http://www.youtube.com/v/${msg.data}?version=3`
+             });
+         };
+         const close = () => {
+             ws.close();
+         };
+         function getVideoId(url) {
+             if(/https\:\/\/youtu\.be\/(.*)/.test(url)) {
+	               return `${url}?`.match(/https\:\/\/youtu\.be\/(.*)\?/)[1];
+             } else if(/v=(.*)/.test(url)) {
+                 return new URLSearchParams(url.split('?')[1]).get('v');
+             } else {
+	               alert("Invalid URL");
+             }
         }
-      });
-    }
-    </script>
-    <script src="subscriptions.js"></script>
-  </body>
+         document.getElementById("url-loader").addEventListener("keyup", e => {
+             if(e.keyCode === 13) {
+                 sendMessage(getVideoId(e.target.value));
+             }
+         });
+        </script>
+        <script src="subscriptions.js"></script>
+    </body>
 </html>
